@@ -5,7 +5,7 @@ Data Platform.
 ## Текущая конфигурация
 - Deployment: corporate-data-deployment
 - Используемый образ: corporate-data-app:2.0
-- Количество экземпляров приложения: 3
+- Количество экземпляров приложения: 2
 - Порт приложения: 8000
 ## Подключение к базе данных
 На данном этапе PostgreSQL продолжает работать как Docker Compose-сервис.
@@ -40,3 +40,26 @@ kubectl scale deployment corporate-data-deployment --replicas=3
 ```
 kubectl logs ИМЯ_POD
 ```
+## Service
+Для предоставления стабильной точки доступа к приложению создан Service:
+```
+corporate-data-service.
+```
+Service выбирает Pod по метке:
+```
+app=corporate-data-app
+```
+Service принимает запросы на порту 80 и передает их приложению на порт 8000.
+## ConfigMap
+Для хранения параметров конфигурации создан ConfigMap:
+```
+corporate-data-config
+```
+В ConfigMap находятся не конфиденциальные параметры подключения к PostgreSQL и
+параметры среды приложения.
+## Масштабирование
+Приложение управляется Deployment:
+```
+corporate-data-deployment
+```
+Итоговое количество экземпляров приложения: 2
