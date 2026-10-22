@@ -5,6 +5,8 @@ services:
       POSTGRES_DB: corporate
       POSTGRES_USER: corporate_user
       POSTGRES_PASSWORD: corporate_password
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
